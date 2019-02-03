@@ -6,7 +6,7 @@ var {mongoose} = require('./db/mongoose');
 var {blogPost} = require('./models/blogPost');
 
 var app = express();
-const port = process.env.port || 3000;
+const port = process.env.PORT || 3000;
 app.use(bodyParser.json());
 app.post('/blogPosts',(req,res) => {
     var newBlogPost2 = new blogPost({
@@ -42,7 +42,7 @@ app.get('/blogPosts/:id', (req,res) => {
         res.send({blogposts});
     }).catch((e) => {
         res.status(400).send();
-    })
+    });
 });
 
 
@@ -51,5 +51,4 @@ app.listen(port, () => {
 });
 
 module.exports = {app};
-
 
