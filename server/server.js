@@ -27,6 +27,7 @@ app.listen(3000, () => {
     console.log('Started on port 3000');
 });
 
+module.exports = {app};
 // var newBlogPost1 = new blogPost({
 //     content:"The world as we have created it is a process of our thinking. It cannot be changed without changing our thinking.",
 //     author:"Albert Einstein"
