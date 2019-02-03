@@ -22,7 +22,13 @@ app.post('/blogPosts',(req,res) => {
 
 });
 
-
+app.get('/blogPosts',(req,res) => {
+    blogPost.find().then((blogposts)=>{
+        res.send({blogposts});
+    },(e) => {
+        res.status(400).send(e);
+    });
+});
 app.listen(3000, () => {
     console.log('Started on port 3000');
 });
