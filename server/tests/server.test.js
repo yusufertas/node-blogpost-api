@@ -1,14 +1,17 @@
 const expect = require('expect');
 const request = require('supertest');
 
+const {ObjectID} = require('mongodb');
 const {app} = require('./../server');
 const {blogPost} = require('./../models/blogPost');
 
 const blogposts = [{
+    _id: new ObjectID(),
     content:"The world as we have created it is a process of our thinking. It cannot be changed without changing our thinking.",
     author:"Albert Einstein",
     tags:[]
 },{
+    _id: new ObjectID(),
     content:"It is our choices, Harry, that show what we truly are, far more than our abilities.",
     author:"J.K. Rowling",
     tags:[]
@@ -76,3 +79,30 @@ describe('GET /blogPosts',() => {
     });
 });
 
+describe('GET /blogPosts/:id', () =>{
+    it('should return blog post doc',(done) =>{
+        request(app)
+        .get(`/blogPosts/${blogposts[0]._id.toHexString()}`)
+        .expect((res) => {
+            expect(res.body.blogposts.content).toBe(blogposts[0].content);
+            expect(res.body.blogposts.author).toBe(blogposts[0].author);
+        })
+        .end(done);
+    });
+    it('should return a 404 if no blog post is found',(done) => {
+        var hexId = new ObjectID().toHexString();
+
+        request(app)
+        .get(`/blogPosts/${hexId}`)
+        .expect(400)
+        .end(done);
+    });
+    it('should return 404 for non object-ids',(done) => {
+        request(app)
+        .get('/blogPosts/123abc')
+        .expect(404)
+        .end(done);
+        
+    })
+    
+});

@@ -35,11 +35,11 @@ app.get('/blogPosts/:id', (req,res) => {
     if(!ObjectID.isValid(id)){
         return res.status(404).send();
     }
-    blogPost.findById(id).then((blogpost) => {
-        if (!blogpost){
+    blogPost.findById(id).then((blogposts) => {
+        if (!blogposts){
            return res.status(400).send();
         }
-        res.send({blogpost});
+        res.send({blogposts});
     }).catch((e) => {
         res.status(400).send();
     })
