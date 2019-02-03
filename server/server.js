@@ -1,7 +1,7 @@
 var express =require('express');
 var bodyParser = require('body-parser');
 
-
+var {ObjectID} = require('mongodb');
 var {mongoose} = require('./db/mongoose');
 var {blogPost} = require('./models/blogPost');
 
@@ -29,6 +29,22 @@ app.get('/blogPosts',(req,res) => {
         res.status(400).send(e);
     });
 });
+
+app.get('/blogPosts/:id', (req,res) => {
+    var id = req.params.id;
+    if(!ObjectID.isValid(id)){
+        return res.status(404).send();
+    }
+    blogPost.findById(id).then((blogpost) => {
+        if (!blogpost){
+           return res.status(400).send();
+        }
+        res.send({blogpost});
+    }).catch((e) => {
+        res.status(400).send();
+    })
+});
+
 
 app.listen(3000, () => {
     console.log('Started on port 3000');
