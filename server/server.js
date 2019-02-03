@@ -6,7 +6,7 @@ var {mongoose} = require('./db/mongoose');
 var {blogPost} = require('./models/blogPost');
 
 var app = express();
-
+const port = process.env.port || 3000;
 app.use(bodyParser.json());
 app.post('/blogPosts',(req,res) => {
     var newBlogPost2 = new blogPost({
@@ -46,8 +46,8 @@ app.get('/blogPosts/:id', (req,res) => {
 });
 
 
-app.listen(3000, () => {
-    console.log('Started on port 3000');
+app.listen(port, () => {
+    console.log(`Started on port ${port}`);
 });
 
 module.exports = {app};
