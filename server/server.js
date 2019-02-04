@@ -45,7 +45,22 @@ app.get('/blogPosts/:id', (req,res) => {
     })
 });
 
-const port = process.env.PORT || 3000;
+app.delete('/blogPosts/:id', (req,res) => {
+    var id = req.params.id;
+    if (!ObjectID.isValid(id)){
+        return res.status(404).send();
+    }
+    blogPost.findByIdAndRemove(id).then((blogposts) => {
+        if (!blogposts){
+            res.status.send(404);
+        }
+        res.send(blogposts);
+    }).catch((e) => {
+        res.status(400).send();
+    })
+});
+
+const port = 3000 || process.env.PORT;
 app.listen(port, () => {
     console.log(`Started on port ${port}`);
 });

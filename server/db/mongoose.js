@@ -6,7 +6,7 @@ let db = {
     mlab: 'mongodb://yusufertas:R1_nappe@ds129904.mlab.com:29904/yusufertas-blogposts'
   };
 
-mongoose.connect(db.mlab);
+mongoose.connect(db.localhost || db.mlab);
 
 module.exports = {
     mongoose
